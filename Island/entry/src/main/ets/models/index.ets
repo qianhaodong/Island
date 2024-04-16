@@ -16,3 +16,12 @@ export interface ClassicType {
   type: number
   url?: string
 }
+
+export interface BookItemType {
+  id: number
+  title: string
+  author: string
+  image: string
+  fav_nums: number
+  like_status: number
+}

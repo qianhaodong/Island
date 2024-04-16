@@ -24,19 +24,37 @@ const request = async (url: string) => {
   return (result[1] as http.HttpResponse).result as string;
 };
 
+// 获取首屏流行数据
 const getClassicLatest = async () => {
   const url = `${BASE_URL}/classic/latest?appkey=${APP_KEY}`;
   const res = await request(url);
   return JSON.parse(res);
 };
 
+// 获取下一个流行数据
 const getClassicPrevious = async (index: number) => {
   const url = `${BASE_URL}/classic/${index}/previous?appkey=${APP_KEY}`;
   const res = await request(url);
   return JSON.parse(res);;
 };
 
+// 获取精选书单
+const getHotBookList = async () => {
+  const url = `${BASE_URL}/book/hot_list?appkey=${APP_KEY}`;
+  const res = await request(url);
+  return JSON.parse(res);
+};
+
+// 获取热门搜索
+const getHotSearchList = async () => {
+  const url = `${BASE_URL}/book/hot_keyword?appkey=${APP_KEY}`;
+  const res = await request(url);
+  return JSON.parse(res).hot;
+};
+
 export {
   getClassicLatest,
   getClassicPrevious,
+  getHotBookList,
+  getHotSearchList,
 }

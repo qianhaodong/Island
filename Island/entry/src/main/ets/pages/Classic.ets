@@ -7,7 +7,6 @@ import { ClassicInfo } from '../components/ClassicInfo'
 @Component
 struct Classic {
   @State classicData: ClassicType | null = null;
-  // @State index: number = 0;
 
   async aboutToAppear() {
     this.classicData = await getClassicLatest();
@@ -23,6 +22,7 @@ struct Classic {
         })
           .layoutWeight(1)
 
+        // 切换按钮
         Row() {
           Image($r('app.media.prev_icon'))
             .width(12)
