@@ -1,6 +1,10 @@
+import { StoreManager } from '../utils/store';
+
 @Component
 struct BookSearch {
+  @Link query: string;
   @Link searchFocus: boolean;
+
   @State searchPlaceholder: string = '搜索图书名称';
   controller: SearchController = new SearchController()
 
@@ -8,6 +12,7 @@ struct BookSearch {
     Row({ space: 10 }) {
       Stack({ alignContent: Alignment.End }) {
         Search({
+          value: this.query,
           placeholder: this.searchPlaceholder,
           controller: this.controller,
         })
@@ -18,14 +23,25 @@ struct BookSearch {
             color: '#aaa'
           })
           .focusOnTouch(true)
+          .onChange((value: string) => {
+            if (value === '') {
+              this.query = value;
+            }
+          })
           .onFocus(() => {
+            this.searchPlaceholder = '搜索图书名称';
             this.searchFocus = true;
+          })
+          .onBlur(() => {
+            this.searchPlaceholder = '搜索图书名称';
           })
           .onSubmit((value: string) => {
             if (value === '') {
               this.searchPlaceholder = '请输入搜索内容';
               return;
             }
+
+            this.query = value;
           })
           .zIndex(2)
           .backgroundColor('#f5f5f5')
@@ -42,14 +58,11 @@ struct BookSearch {
           .focusOnTouch(true)
           .onClick(() => {
             this.searchFocus = false;
+            this.query = '';
             this.controller.stopEditing()
           })
           .zIndex(1)
       }
-
-      // if (this.searchFocus) {
-        // .visibility(this.searchFocus ? Visibility.Visible : Visibility.Hidden)
-      // }
     }
     .width('100%')
     .height(60)

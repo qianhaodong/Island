@@ -6,8 +6,9 @@ import { BookItemType } from '../models';
 
 @Component
 struct Book {
-  @State searchResultShow: boolean = false;
+  @State searchFocus: boolean = false;
   @State hotBookList: BookItemType[] = [];
+  @State query: string = '';
 
   async aboutToAppear() {
     this.hotBookList = await getHotBookList();
@@ -16,11 +17,12 @@ struct Book {
   build() {
     Column() {
       BookSearch({
-        searchFocus: this.searchResultShow
+        query: this.query,
+        searchFocus: this.searchFocus
       })
 
       Scroll() {
-        if (!this.searchResultShow) {
+        if (!this.searchFocus) {
           Column() {
             Image($r('app.media.decorate_icon'))
               .width(54)
@@ -33,7 +35,9 @@ struct Book {
             })
           }
         } else {
-          SearchResult()
+          SearchResult({
+            query: this.query
+          })
         }
       }
       .width('100%')

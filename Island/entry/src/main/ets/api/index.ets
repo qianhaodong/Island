@@ -59,10 +59,18 @@ const getBookDetails = async (id: number) => {
   return JSON.parse(res);
 };
 
+// 获取搜索内容
+const getSearchResult = async (query: string) => {
+  const url = `${BASE_URL}/book/search?summary=1&q=${query}&appkey=${APP_KEY}`;
+  const res = await request(url);
+  return JSON.parse(res).books;
+};
+
 export {
   getClassicLatest,
   getClassicPrevious,
   getHotBookList,
   getHotSearchList,
   getBookDetails,
+  getSearchResult,
 }

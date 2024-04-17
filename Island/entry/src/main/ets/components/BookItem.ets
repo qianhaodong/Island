@@ -23,7 +23,7 @@ struct BookItem {
           .textOverflow({
             overflow: TextOverflow.Ellipsis
           })
-        Text(this.bookItem.author)
+        Text(this.bookItem.author.toString())
           .fontSize(10)
           .fontColor('#999')
           .width('100%')

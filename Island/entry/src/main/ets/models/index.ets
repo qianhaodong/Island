@@ -20,10 +20,12 @@ export interface ClassicType {
 export interface BookItemType {
   id: number
   title: string
-  author: string
+  author: string | string[]
   image: string
-  fav_nums: number
-  like_status: number
+  fav_nums?: number
+  like_status?: number
+  price?: string
+  isbn?: string
 }
 
 interface BookImageModel {
