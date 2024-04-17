@@ -52,9 +52,17 @@ const getHotSearchList = async () => {
   return JSON.parse(res).hot;
 };
 
+// 获取书单详情
+const getBookDetails = async (id: number) => {
+  const url = `${BASE_URL}/book/${id}/detail?appkey=${APP_KEY}`;
+  const res = await request(url);
+  return JSON.parse(res);
+};
+
 export {
   getClassicLatest,
   getClassicPrevious,
   getHotBookList,
   getHotSearchList,
+  getBookDetails,
 }

@@ -25,3 +25,29 @@ export interface BookItemType {
   fav_nums: number
   like_status: number
 }
+
+interface BookImageModel {
+  large: string
+}
+
+export interface BookDetailsType {
+  id: number
+  title: string
+  author: string[]
+  image: string
+  images: BookImageModel
+  summary: string
+  pages: string
+  price: string
+  pubdate: string
+  publisher: string
+  binding: string
+  category: string
+  isbn: string
+  subtitle: string
+  translator: string[]
+}
+
+export interface DataModel {
+  id: number
+}

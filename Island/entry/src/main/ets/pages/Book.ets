@@ -15,7 +15,9 @@ struct Book {
 
   build() {
     Column() {
-      BookSearch()
+      BookSearch({
+        searchFocus: this.searchResultShow
+      })
 
       Scroll() {
         if (!this.searchResultShow) {
@@ -36,7 +38,6 @@ struct Book {
       }
       .width('100%')
       .layoutWeight(1)
-      // .backgroundColor('rgba(0,0,0,0.4)')
     }
     .width('100%')
     .height('100%')

@@ -1,5 +1,6 @@
 import { Level } from '@ohos/hypium/src/main/Constant';
-import { BookItemType } from '../models'
+import { BookItemType, DataModel } from '../models'
+import { router } from '@kit.ArkUI';
 
 @Component
 struct BookItem {
@@ -54,9 +55,16 @@ struct BookItem {
     .height(180)
     .margin({ bottom: 30 })
     .borderRadius(3)
-    /*.shadow({
-
-    })*/
+    /*.shadow({})*/
+    .onClick(() => {
+      const params: DataModel = {
+        id: this.bookItem.id
+      };
+      router.pushUrl({
+        url: 'pages/BookDetails',
+        params
+      });
+    })
   }
 }
 
