@@ -1,4 +1,4 @@
-import { getHotSearchList, getSearchResult } from '../api'
+import { getHotSearchList, getSearchResult } from '../api/book'
 import { BookItemType, DataModel } from '../models';
 import { StoreManager } from '../utils/store';
 import { BookList } from './BookList';

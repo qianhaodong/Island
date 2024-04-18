@@ -32,7 +32,7 @@ struct Like {
           .justifyContent(FlexAlign.SpaceBetween)
         }
 
-        Text('没有喜欢的列表~')
+        Text('暂时没有喜欢的内容~')
           .fontSize(18)
           .fontColor('#999')
           .margin({ top: 80 })

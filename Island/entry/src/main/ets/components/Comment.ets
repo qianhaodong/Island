@@ -1,7 +1,11 @@
+import { BookLikeStatus } from '../models'
 import { Stars } from './Stars'
 
 @Component
 struct Comment {
+  @Prop likeStatus: BookLikeStatus | null = null;
+  @Prop itemType: number = 0;
+
   build() {
     Row() {
       Row({ space: 5 }) {
@@ -25,7 +29,12 @@ struct Comment {
       .borderRadius(27)
 
       Row({ space: 10 }) {
-        Stars()
+        Stars({
+          itemId: this.likeStatus?.id,
+          itemType: this.itemType,
+          likeStatus: !!this.likeStatus?.like_status,
+          favNums: this.likeStatus?.fav_nums
+        })
 
         Image($r('app.media.share_icon'))
           .width(14)

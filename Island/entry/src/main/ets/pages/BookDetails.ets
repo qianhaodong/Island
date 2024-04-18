@@ -1,7 +1,7 @@
 import { Comment } from '../components/Comment';
-import { BookDetailsType, BookItemType, DataModel } from '../models';
+import { BookDetailsType, BookItemType, BookLikeStatus, DataModel } from '../models';
 import { router } from '@kit.ArkUI';
-import { getBookDetails } from '../api';
+import { getBookDetails, getBookLikeStatus } from '../api/book';
 
 // 获取页面路由参数
 const params: DataModel = router.getParams() as DataModel;
@@ -37,9 +37,16 @@ struct BookDetails {
     '浪漫爱情 +566',
     '233333 +122'
   ];
+  @State bookLikeStatus: BookLikeStatus | null = null;
 
   async aboutToAppear() {
-    this.bookDetails = await getBookDetails(id) as BookDetailsType;
+    getBookDetails(id).then((res: BookDetailsType) => {
+      this.bookDetails = res;
+    });
+
+    getBookLikeStatus(id).then((res: BookLikeStatus) => {
+      this.bookLikeStatus = res;
+    });
   }
 
   build() {
@@ -150,7 +157,10 @@ struct BookDetails {
       .width('100%')
       .layoutWeight(1)
 
-      Comment()
+      Comment({
+        itemType: 400,
+        likeStatus: this.bookLikeStatus
+      })
     }
     .width('100%')
     .height('100%')

@@ -1,4 +1,4 @@
-import { getClassicLatest, getClassicPrevious } from '../api';
+import { getClassicLatest, getClassicNext, getClassicPrevious } from '../api/classic';
 import { ClassicType } from '../models'
 
 import { ClassicContent } from '../components/ClassicContent'
@@ -14,7 +14,9 @@ struct Classic {
 
   build() {
     Column() {
-      ClassicInfo()
+      ClassicInfo({
+        classicData: this.classicData
+      })
 
       Column() {
         ClassicContent({
@@ -29,7 +31,7 @@ struct Classic {
             .opacity(this.classicData?.index === 8 ? 0.3 : 1)
             .onClick(async () => {
               if (this.classicData?.index === 8) return;
-              this.classicData = await getClassicPrevious(this.classicData?.index as number + 2)
+              this.classicData = await getClassicNext(this.classicData?.index as number)
             })
           Text(this.classicData?.title)
             .fontSize(14)

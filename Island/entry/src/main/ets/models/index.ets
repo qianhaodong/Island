@@ -14,6 +14,7 @@ export interface ClassicType {
   fav_nums: number
   pubdata: string
   type: number
+  like_status: number
   url?: string
 }
 
@@ -48,6 +49,12 @@ export interface BookDetailsType {
   isbn: string
   subtitle: string
   translator: string[]
+}
+
+export interface BookLikeStatus {
+  id: number
+  fav_nums: number
+  like_status: number
 }
 
 export interface DataModel {

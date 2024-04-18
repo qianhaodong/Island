@@ -1,4 +1,4 @@
-import { getHotBookList } from '../api';
+import { getHotBookList } from '../api/book';
 import { BookList } from '../components/BookList';
 import { BookSearch } from '../components/BookSearch'
 import { SearchResult } from '../components/SearchResult';
