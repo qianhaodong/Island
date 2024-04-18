@@ -1,6 +1,6 @@
-// 获取精选书单
 import { APP_KEY, BASE_URL, request } from '.';
 
+// 获取精选书单
 const getHotBookList = async () => {
   const url = `${BASE_URL}/book/hot_list?appkey=${APP_KEY}`;
   const res = await request(url);

@@ -1,4 +1,3 @@
-// 获取精选书单
 import { APP_KEY, BASE_URL, request } from '.';
 
 // 获取首屏流行数据

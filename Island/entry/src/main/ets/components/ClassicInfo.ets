@@ -12,7 +12,7 @@ struct ClassicInfo {
           Text('No.')
             .fontSize(18)
             .lineHeight(40)
-          Text(this.classicData?.index.toString())
+          Text(this.classicData?.index?.toString())
             .fontWeight(FontWeight.Bold)
             .fontSize(32)
             .lineHeight(40)
@@ -23,9 +23,9 @@ struct ClassicInfo {
           .height(22)
           .backgroundColor(Color.Black)
         Column() {
-          Text('六月')
+          Text('四月')
             .fontSize(14)
-          Text('2019')
+          Text('2024')
             .fontSize(12)
         }
         .alignItems(HorizontalAlign.Start)
