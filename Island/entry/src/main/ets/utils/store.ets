@@ -18,7 +18,7 @@ export class StoreManager {
 
   static getHistorySearchList() {
     const store = StoreManager.getStore();
-    const data = store.getSync(SEARCH_KEY, []);
+    const data = store.getSync(SEARCH_KEY, '[]');
     const result: string[] = JSON.parse(data as string);
     return result;
   }

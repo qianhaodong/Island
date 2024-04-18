@@ -42,6 +42,7 @@ struct Book {
       }
       .width('100%')
       .layoutWeight(1)
+      .align(Alignment.TopStart)
     }
     .width('100%')
     .height('100%')

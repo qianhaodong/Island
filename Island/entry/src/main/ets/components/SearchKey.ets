@@ -3,6 +3,8 @@ struct SearchKey {
   @Require @Prop title: string = '';
   @Prop labels: string[] = [];
 
+  labelClick: (label: string) => void = () => {};
+
   build() {
     Column({ space: 15 }) {
       Row({ space: 10 }) {
@@ -24,6 +26,9 @@ struct SearchKey {
             .borderRadius(2)
             .padding({ top: 5, right: 10, bottom: 5, left: 10 })
             .margin({ right: 10, bottom: 10 })
+            .onClick(() => {
+              this.labelClick(item);
+            })
         })
       }
       .padding({ left: 14 })
