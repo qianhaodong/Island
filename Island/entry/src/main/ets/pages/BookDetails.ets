@@ -45,7 +45,7 @@ struct BookDetails {
     // 获取书籍短评
     getBookShortComment(id).then((res: BookCommentItem[]) => {
       this.commentList = res;
-    })
+    });
   }
 
   build() {
@@ -159,7 +159,13 @@ struct BookDetails {
 
       Comment({
         itemType: 400,
-        likeStatus: this.bookLikeStatus
+        likeStatus: this.bookLikeStatus,
+        updateDate: () => {
+          // 更新点赞状态
+          getBookLikeStatus(id).then((res: BookLikeStatus) => {
+            this.bookLikeStatus = res;
+          });
+        }
       })
     }
     .width('100%')

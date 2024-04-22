@@ -32,8 +32,6 @@ export const request = async (url: string, method: http.RequestMethod = http.Req
     throw new Error('[request]:httpRequest.request:Error');
   }
 
-  // console.log('requestSuccess-result : ', JSON.stringify(result[1]))
-
   if ((result[1] as http.HttpResponse).responseCode !== 200) {
     throw new Error('[request]:http.HttpResponse.responseCode !== 200');
   }

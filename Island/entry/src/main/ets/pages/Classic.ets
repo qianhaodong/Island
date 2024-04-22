@@ -8,22 +8,22 @@ import { EmitEventType } from '../constants';
 
 @Component
 struct Classic {
-  @State classicData: ClassicType | null = null;
   @Prop tabContentShow: boolean = false;
+  @State classicData: ClassicType | null = null;
+  @State btnEnabled: boolean = true;
 
   async aboutToAppear() {
     this.classicData = await getClassicLatest();
 
     // 订阅tab显示事件
     emitter.on({ eventId: EmitEventType.TAB_PAGE_SHOW }, () => {
-      // console.log('TabContent-show')
       this.updateData();
     });
 
     // 订阅tab隐藏事件
-    emitter.on({ eventId: EmitEventType.TAB_PAGE_HIDE }, () => {
-      console.log('TabContent-hide')
-    });
+    /*emitter.on({ eventId: EmitEventType.TAB_PAGE_HIDE }, () => {
+      console.log('TabContent-hide');
+    });*/
   }
 
   // 更新当前期刊数据
@@ -51,19 +51,40 @@ struct Classic {
           Image($r('app.media.prev_icon'))
             .width(12)
             .opacity(this.classicData?.index === 8 ? 0.3 : 1)
-            .onClick(async () => {
+            .onClick(() => {
               if (this.classicData?.index === 8) return;
-              this.classicData = await getClassicNext(this.classicData?.index as number)
+
+              // 添加节流控制
+              this.btnEnabled = false;
+              getClassicNext(this.classicData?.index as number)
+                .then((res: ClassicType) => {
+                  this.classicData = res;
+                })
+                .finally(() => {
+                  this.btnEnabled = true;
+                })
             })
+            .enabled(this.btnEnabled)
+
           Text(this.classicData?.title)
             .fontSize(14)
+
           Image($r('app.media.next_icon'))
             .width(12)
             .opacity(this.classicData?.index === 1 ? 0.3 : 1)
-            .onClick(async () => {
+            .onClick(() => {
               if (this.classicData?.index === 1) return;
-              this.classicData = await getClassicPrevious(this.classicData?.index as number)
+
+              this.btnEnabled = false;
+              getClassicPrevious(this.classicData?.index as number)
+                .then((res: ClassicType) => {
+                  this.classicData = res;
+                })
+                .finally(() => {
+                  this.btnEnabled = true;
+                })
             })
+            .enabled(this.btnEnabled)
         }
         .width(300)
         .height(40)

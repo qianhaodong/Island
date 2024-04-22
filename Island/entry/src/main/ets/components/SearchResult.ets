@@ -23,6 +23,7 @@ struct SearchResult {
     this.historySearchList = StoreManager.getHistorySearchList();
   }
 
+  // 监听query变化，查询数据
   async listenQueryChange() {
     if (this.query === '') {
       this.searchList = [];

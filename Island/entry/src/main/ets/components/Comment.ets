@@ -6,6 +6,8 @@ struct Comment {
   @Prop likeStatus: BookLikeStatus | null = null;
   @Prop itemType: number = 0;
 
+  updateDate: () => void = () => {};
+
   build() {
     Row() {
       Row({ space: 5 }) {
@@ -34,7 +36,10 @@ struct Comment {
           itemId: this.likeStatus?.id,
           itemType: this.itemType,
           likeStatus: !!this.likeStatus?.like_status,
-          favNums: this.likeStatus?.fav_nums
+          favNums: this.likeStatus?.fav_nums,
+          updateData: () => {
+            this.updateDate();
+          }
         })
 
         Image($r('app.media.share_icon'))

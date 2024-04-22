@@ -1,5 +1,3 @@
-import { StoreManager } from '../utils/store';
-
 @Component
 struct BookSearch {
   @Link query: string;
