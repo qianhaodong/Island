@@ -1,6 +1,7 @@
 {
   "src": [
     "pages/Index",
-    "pages/BookDetails"
+    "pages/BookDetails",
+    "pages/ClassicDetails"
   ]
 }

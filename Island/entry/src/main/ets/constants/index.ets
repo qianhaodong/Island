@@ -21,3 +21,8 @@ export const tabData: TabDataType[] = [
     iconActive: $r("app.media.like_active")
   },
 ];
+
+// 发布、订阅事件枚举
+export enum EmitEventType {
+  UPDATE_STATE
+}

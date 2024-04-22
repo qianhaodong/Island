@@ -60,3 +60,9 @@ export interface BookLikeStatus {
 export interface DataModel {
   id: number
 }
+
+export interface PlayStateType {
+  // url: string
+  playIndex: number
+  isPlay: boolean
+}

@@ -38,6 +38,7 @@ struct LikeItem {
         .justifyContent(FlexAlign.Center)
 
         Stars({
+          clickable: false,
           itemId: this.likeItem?.id,
           itemType: this.likeItem?.type,
           favNums: this.likeItem?.fav_nums,

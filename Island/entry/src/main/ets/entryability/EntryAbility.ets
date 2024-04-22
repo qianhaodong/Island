@@ -2,6 +2,7 @@ import { AbilityConstant, UIAbility, Want } from '@kit.AbilityKit';
 import { hilog } from '@kit.PerformanceAnalysisKit';
 import { window } from '@kit.ArkUI';
 import { StoreManager } from '../utils/store';
+import { AVPlayerClass } from '../utils/AVPlayerClass';
 
 export default class EntryAbility extends UIAbility {
   onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
@@ -18,6 +19,9 @@ export default class EntryAbility extends UIAbility {
 
     // 保存 context 上下文
     StoreManager.context = this.context;
+
+    // 初始化播放器
+    AVPlayerClass.init();
 
     windowStage.loadContent('pages/Index', (err) => {
       if (err.code) {

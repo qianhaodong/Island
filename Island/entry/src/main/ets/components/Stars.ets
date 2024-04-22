@@ -6,6 +6,7 @@ struct Stars {
   @Prop itemType: number = 0;
   @Prop likeStatus: boolean = false;
   @Prop favNums: number = 0;
+  @Prop clickable: boolean = true;
 
   build() {
     Row() {
@@ -13,6 +14,8 @@ struct Stars {
         .width(16)
         .height(14)
         .onClick(() => {
+          if (!this.clickable) return;
+
           this.likeStatus = !this.likeStatus;
 
           const params: Record<string, number | string> = {

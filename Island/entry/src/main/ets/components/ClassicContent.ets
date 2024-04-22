@@ -1,10 +1,14 @@
-import { ClassicType } from '../models';
+import { ClassicType, PlayStateType } from '../models';
+import { AVPlayerClass } from '../utils/AVPlayerClass';
+import { emitter } from '@kit.BasicServicesKit';
+import { EmitEventType } from '../constants';
 
 @Component
 struct ClassicContent {
   @Prop @Watch('handleDataChange') classicData: ClassicType | null;
   @State category: string = 'movie';
   @State musicShow: boolean = false;
+  @State playState: PlayStateType | null = null;
 
   handleDataChange() {
     switch (this.classicData?.type) {
@@ -23,6 +27,14 @@ struct ClassicContent {
     }
   }
 
+  aboutToAppear() {
+    console.log('ClassicContent-classicData : ', JSON.stringify(this.classicData));
+    emitter.on({ eventId: EmitEventType.UPDATE_STATE }, (data) => {
+      this.playState = data.data?.playState;
+      console.log('ClassicContent-playState : ', JSON.stringify(this.playState))
+    })
+  }
+
   build() {
     Column() {
       Stack({ alignContent: Alignment.BottomStart }) {
@@ -34,9 +46,20 @@ struct ClassicContent {
                 .height(210)
                 .borderRadius(210)
 
-              Image($r('app.media.play_icon'))
+              Image((this.playState?.isPlay && this.playState?.playIndex === this.classicData?.index) ? $r('app.media.pause_icon') : $r('app.media.play_icon'))
                 .width(60)
                 .height(60)
+                .onClick(() => {
+                  if (this.playState?.isPlay && this.playState.playIndex === this.classicData?.index) {
+                    // console.log('ClassicContentMusicPlay-pause : ', this.playState.playIndex)
+                    // 暂停播放
+                    AVPlayerClass.pausePlay();
+                  } else {
+                    // console.log('ClassicContentMusicPlay-singlePlay : ', this.classicData?.index)
+                    // 播放歌曲
+                    AVPlayerClass.singlePlay(this.classicData?.url as string, this.classicData?.index as number);
+                  }
+                })
             }
 
           } else {

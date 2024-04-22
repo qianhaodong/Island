@@ -21,8 +21,16 @@ const getClassicNext = async (index: number) => {
   return JSON.parse(res);;
 };
 
+// 获取期刊详情
+const getClassicDetails = async (type: number, id: number) => {
+  const url = `${BASE_URL}/classic/${type}/${id}?appkey=${APP_KEY}`;
+  const res = await request(url);
+  return JSON.parse(res);;
+};
+
 export {
   getClassicLatest,
   getClassicPrevious,
   getClassicNext,
+  getClassicDetails,
 }

@@ -1,6 +1,7 @@
 import { getBookLikeNums, getClassicLikeList } from '../api/like'
 import { LikeItem } from '../components/LikeItem';
 import { ClassicType } from '../models';
+import { router } from '@kit.ArkUI';
 
 @Component
 struct Like {
@@ -81,6 +82,12 @@ struct Like {
                 likeItem: item
               })
                 .width('48%')
+                .onClick(() => {
+                  router.pushUrl({
+                    url: 'pages/ClassicDetails',
+                    params: item
+                  })
+                })
             })
           }
           .padding({ left: 18, right: 18 })
