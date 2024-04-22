@@ -3,22 +3,40 @@ import { ClassicType } from '../models'
 
 import { ClassicContent } from '../components/ClassicContent'
 import { ClassicInfo } from '../components/ClassicInfo'
+import { emitter } from '@kit.BasicServicesKit';
+import { EmitEventType } from '../constants';
 
 @Component
 struct Classic {
   @State classicData: ClassicType | null = null;
+  @Prop tabContentShow: boolean = false;
 
   async aboutToAppear() {
     this.classicData = await getClassicLatest();
+
+    // 订阅tab显示事件
+    emitter.on({ eventId: EmitEventType.TAB_PAGE_SHOW }, () => {
+      // console.log('TabContent-show')
+      this.updateData();
+    });
+
+    // 订阅tab隐藏事件
+    emitter.on({ eventId: EmitEventType.TAB_PAGE_HIDE }, () => {
+      console.log('TabContent-hide')
+    });
+  }
+
+  // 更新当前期刊数据
+  async updateData() {
+    this.classicData = await getClassicDetails(this.classicData?.type as number, this.classicData?.id as number)
   }
 
   build() {
     Column() {
       ClassicInfo({
         classicData: this.classicData,
-        updateData: async () => {
-          // 刷新当前期刊数据
-          this.classicData = await getClassicDetails(this.classicData?.type as number, this.classicData?.id as number)
+        updateData: () => {
+          this.updateData();
         }
       })
 

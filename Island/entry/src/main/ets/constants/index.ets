@@ -24,5 +24,7 @@ export const tabData: TabDataType[] = [
 
 // 发布、订阅事件枚举
 export enum EmitEventType {
-  UPDATE_STATE
+  UPDATE_STATE,
+  TAB_PAGE_SHOW,
+  TAB_PAGE_HIDE
 }
