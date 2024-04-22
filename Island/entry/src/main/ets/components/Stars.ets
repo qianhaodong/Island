@@ -1,4 +1,5 @@
 import { likeClick, likeClickCancel } from '../api';
+import { to } from '../utils';
 
 @Component
 struct Stars {
@@ -8,15 +9,15 @@ struct Stars {
   @Prop favNums: number = 0;
   @Prop clickable: boolean = true;
 
+  updateData: () => void = () => {};
+
   build() {
     Row() {
       Image(this.likeStatus ? $r('app.media.love_active_icon') : $r('app.media.love_icon'))
         .width(16)
         .height(14)
-        .onClick(() => {
+        .onClick(async () => {
           if (!this.clickable) return;
-
-          this.likeStatus = !this.likeStatus;
 
           const params: Record<string, number | string> = {
             "art_id": this.itemId,
@@ -25,13 +26,14 @@ struct Stars {
 
           if (this.likeStatus) {
             // 点赞
-            this.favNums++;
-            likeClick(params);
+            await to(likeClickCancel(params));
           } else {
             // 取消点赞
-            this.favNums;
-            likeClickCancel(params);
+            await to(likeClick(params));
           }
+
+          // 通知页面刷新数据
+          this.updateData();
         })
 
       if (this.favNums) {

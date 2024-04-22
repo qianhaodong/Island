@@ -1,4 +1,4 @@
-import { getClassicLatest, getClassicNext, getClassicPrevious } from '../api/classic';
+import { getClassicDetails, getClassicLatest, getClassicNext, getClassicPrevious } from '../api/classic';
 import { ClassicType } from '../models'
 
 import { ClassicContent } from '../components/ClassicContent'
@@ -15,7 +15,11 @@ struct Classic {
   build() {
     Column() {
       ClassicInfo({
-        classicData: this.classicData
+        classicData: this.classicData,
+        updateData: async () => {
+          // 刷新当前期刊数据
+          this.classicData = await getClassicDetails(this.classicData?.type as number, this.classicData?.id as number)
+        }
       })
 
       Column() {

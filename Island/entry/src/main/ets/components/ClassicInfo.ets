@@ -5,6 +5,8 @@ import { Stars } from './Stars'
 struct ClassicInfo {
   @Prop classicData: ClassicType | null;
 
+  updateData: () => void = () => {};
+
   build() {
     Row() {
       Row({ space: 6 }) {
@@ -36,7 +38,10 @@ struct ClassicInfo {
           itemId: this.classicData?.id,
           itemType: this.classicData?.type,
           likeStatus: !!this.classicData?.like_status,
-          favNums: this.classicData?.fav_nums
+          favNums: this.classicData?.fav_nums,
+          updateData: () => {
+            this.updateData();
+          }
         })
         Image($r('app.media.share_icon'))
           .width(14)

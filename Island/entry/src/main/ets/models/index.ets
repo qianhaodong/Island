@@ -62,11 +62,11 @@ export interface BookCommentItem {
   nums: number
 }
 
-export interface DataModel {
-  id: number
-}
-
 export interface PlayStateType {
   playIndex: number
   isPlay: boolean
+}
+
+export interface DataModel {
+  id: number
 }

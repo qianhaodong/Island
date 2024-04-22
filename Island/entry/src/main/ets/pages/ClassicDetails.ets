@@ -11,13 +11,17 @@ struct ClassicDetails {
 
   async aboutToAppear() {
     const params: ClassicType = router.getParams() as ClassicType;
-    this.classicData = await getClassicDetails(params.type, params.id) as ClassicType;
+    this.classicData = await getClassicDetails(params.type, params.id);
   }
 
   build() {
     Column() {
       ClassicInfo({
-        classicData: this.classicData
+        classicData: this.classicData,
+        updateData: async () => {
+          // 更新数据
+          this.classicData = await getClassicDetails(this.classicData?.type as number, this.classicData?.id as number);
+        }
       })
 
       Column() {
