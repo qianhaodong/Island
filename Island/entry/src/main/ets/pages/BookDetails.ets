@@ -1,7 +1,7 @@
 import { Comment } from '../components/Comment';
-import { BookDetailsType, BookItemType, BookLikeStatus, DataModel } from '../models';
+import { BookCommentItem, BookDetailsType, BookItemType, BookLikeStatus, DataModel } from '../models';
 import { router } from '@kit.ArkUI';
-import { getBookDetails, getBookLikeStatus } from '../api/book';
+import { getBookDetails, getBookLikeStatus, getBookShortComment } from '../api/book';
 
 // 获取页面路由参数
 const params: DataModel = router.getParams() as DataModel;
@@ -28,25 +28,24 @@ const id = params.id;
 @Component
 struct BookDetails {
   @State bookDetails: BookDetailsType | null = null;
-  @State commentList: string[] = [
-    '你好哇，李银河 +234',
-    '浪漫爱情 +453',
-    '你要是喜欢别人我会哭 +228',
-    '我还是喜欢你 +453',
-    '我这张丑脸上就泛起微笑 +666',
-    '浪漫爱情 +566',
-    '233333 +122'
-  ];
+  @State commentList: BookCommentItem[] = [];
   @State bookLikeStatus: BookLikeStatus | null = null;
 
   async aboutToAppear() {
+    // 获取书籍详情
     getBookDetails(id).then((res: BookDetailsType) => {
       this.bookDetails = res;
     });
 
+    // 获取点赞状态
     getBookLikeStatus(id).then((res: BookLikeStatus) => {
       this.bookLikeStatus = res;
     });
+
+    // 获取书籍短评
+    getBookShortComment(id).then((res: BookCommentItem[]) => {
+      this.commentList = res;
+    })
   }
 
   build() {
@@ -70,25 +69,27 @@ struct BookDetails {
           .padding({ top: 20, bottom: 20 })
           .alignItems(HorizontalAlign.Center)
 
-          Column() {
-            Text('短评')
-              .titleStyle()
-            Flex({
-              wrap: FlexWrap.Wrap
-            }) {
-              ForEach(this.commentList, (item: string) => {
-                Text(item)
-                  .fontSize(12)
-                  .fontColor('#666')
-                  .backgroundColor('#f7f7f7')
-                  .borderRadius(30)
-                  .padding({ top: 6, right: 12, bottom: 6, left: 12 })
-                  .margin({ right: 6, bottom: 10 })
-              })
+          if (this.commentList.length) {
+            Column() {
+              Text('短评')
+                .titleStyle()
+              Flex({
+                wrap: FlexWrap.Wrap
+              }) {
+                ForEach(this.commentList, (item: BookCommentItem, index) => {
+                  Text(`${item.content} +${item.nums}`)
+                    .fontSize(12)
+                    .fontColor('#666')
+                    .backgroundColor(index === 0 ? '#FFFADD' : index === 1 ? '#EFFAFF' : '#f7f7f7')
+                    .borderRadius(30)
+                    .padding({ top: 6, right: 12, bottom: 6, left: 12 })
+                    .margin({ right: 6, bottom: 10 })
+                })
+              }
             }
+            .sectionStyle()
+            .padding({ right: 16, bottom: 4, left: 16 })
           }
-          .sectionStyle()
-          .padding({ right: 10, bottom: 4, left: 10 })
 
           Column() {
             Text('内容简介')
@@ -97,7 +98,6 @@ struct BookDetails {
             Text(this.bookDetails?.summary)
               .fontSize(14)
               .fontColor('#666')
-              // .letterSpacing(1)
               .lineHeight(24)
           }
           .sectionStyle()

@@ -57,12 +57,16 @@ export interface BookLikeStatus {
   like_status: number
 }
 
+export interface BookCommentItem {
+  content: string
+  nums: number
+}
+
 export interface DataModel {
   id: number
 }
 
 export interface PlayStateType {
-  // url: string
   playIndex: number
   isPlay: boolean
 }

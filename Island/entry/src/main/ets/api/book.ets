@@ -1,3 +1,4 @@
+import { http } from '@kit.NetworkKit';
 import { APP_KEY, BASE_URL, request } from '.';
 
 // 获取精选书单
@@ -39,6 +40,13 @@ const getBookLikeStatus = async (id: number) => {
 const getBookShortComment = async (id: number) => {
   const url = `${BASE_URL}/book/${id}/short_comment?appkey=${APP_KEY}`;
   const res = await request(url);
+  return JSON.parse(res).comments;
+};
+
+// 新增短评
+const addBookShortComment = async (params: Record<string, number | string>) => {
+  const url = `${BASE_URL}/book/add/short_comment?appkey=${APP_KEY}`;
+  const res = await request(url, http.RequestMethod.POST, params);
   return JSON.parse(res);
 };
 
@@ -49,4 +57,5 @@ export {
   getSearchResult,
   getBookLikeStatus,
   getBookShortComment,
+  addBookShortComment,
 }

@@ -13,6 +13,7 @@ struct Comment {
           .width(12)
           .height(12)
         TextInput({ placeholder: '留下你的短评~' })
+          .maxLength(12)
           .layoutWeight(1)
           .height('100%')
           .padding(0)

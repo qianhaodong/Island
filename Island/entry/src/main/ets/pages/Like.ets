@@ -43,6 +43,13 @@ struct Like {
                 .fontSize(12)
                 .fontColor('#999')
             }
+            .onClick(() => {
+              AlertDialog.show({
+                title: '关于我们',
+                message: '参考慕课网七月老师小程序课程，旧岛小程序项目。',
+                alignment: DialogAlignment.Center
+              })
+            })
 
             Column() {
               Text(this.likeNums.toString())
