@@ -1,10 +1,9 @@
-
+import { emitter } from '@kit.BasicServicesKit';
 import { EmitEventType, tabData } from '../constants'
 import { TabDataType } from '../models'
 import { Book } from './Book';
 import { Classic } from './Classic';
 import { Like } from './Like';
-import { emitter } from '@kit.BasicServicesKit';
 
 @Entry
 @Component
@@ -29,9 +28,7 @@ struct Index {
         TabContent() {
           Column() {
             if (item.name === 'classic') {
-              Classic({
-                tabContentShow: true
-              })
+              Classic()
             } else if (item.name === 'book') {
               Book()
             } else if (item.name === 'like') {
@@ -57,9 +54,15 @@ struct Index {
 
       // 派发切换tab事件
       if (this.currentName === 'classic') {
-        emitter.emit({ eventId: EmitEventType.TAB_PAGE_SHOW })
+        emitter.emit({ eventId: EmitEventType.TAB_CLASSIC_SHOW })
       } else {
-        emitter.emit({ eventId: EmitEventType.TAB_PAGE_HIDE })
+        emitter.emit({ eventId: EmitEventType.TAB_CLASSIC_HIDE })
+      }
+
+      if (this.currentName === 'like') {
+        emitter.emit({ eventId: EmitEventType.TAB_LIKE_SHOW })
+      } else {
+        emitter.emit({ eventId: EmitEventType.TAB_LIKE_HIDE })
       }
     })
   }

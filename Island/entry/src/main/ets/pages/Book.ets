@@ -4,6 +4,7 @@ import { BookList } from '../components/BookList';
 import { BookSearch } from '../components/BookSearch'
 import { SearchResult } from '../components/SearchResult';
 import { BookItemType } from '../models';
+import { StoreManager } from '../utils/store';
 
 @Component
 struct Book {
@@ -13,9 +14,19 @@ struct Book {
   @State isLoading: boolean = false;
 
   async aboutToAppear() {
-    this.isLoading = true;
-    this.hotBookList = await getHotBookList();
-    this.isLoading = false;
+    // this.isLoading = true;
+
+    // 获取热门书籍缓存
+    this.hotBookList = StoreManager.getHotBookList();
+
+    // 请求热门书籍接口数据
+    getHotBookList()
+      .then((res: BookItemType[]) => {
+        this.hotBookList = res;
+
+        // 更新热门书籍缓存
+        StoreManager.setHotBookList(res);
+      })
   }
 
   build() {

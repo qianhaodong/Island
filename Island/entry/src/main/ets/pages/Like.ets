@@ -1,7 +1,9 @@
+import { router, SwipeRefresher } from '@kit.ArkUI';
+import { BusinessError, emitter } from '@kit.BasicServicesKit';
 import { getBookLikeNums, getClassicLikeList } from '../api/like'
 import { LikeItem } from '../components/LikeItem';
+import { EmitEventType } from '../constants';
 import { ClassicType } from '../models';
-import { router, SwipeRefresher } from '@kit.ArkUI';
 
 @Component
 struct Like {
@@ -13,7 +15,12 @@ struct Like {
 
   aboutToAppear() {
     this.isLoading = true;
-    this.getData();
+    // this.getData();
+
+    // 订阅tab显示事件
+    emitter.on({ eventId: EmitEventType.TAB_LIKE_SHOW }, () => {
+      this.getData();
+    });
   }
 
   getData() {
@@ -30,6 +37,9 @@ struct Like {
       if (!this.classicLikeList.length) {
         this.isEmpty = true;
       }
+    }).catch((err: BusinessError) => {
+      this.isLoading = false;
+      this.isEmpty = true;
     })
   }
 

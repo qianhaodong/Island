@@ -1,27 +1,36 @@
+import { emitter } from '@kit.BasicServicesKit';
 import { getClassicDetails, getClassicLatest, getClassicNext, getClassicPrevious } from '../api/classic';
 import { ClassicType } from '../models'
-
 import { ClassicContent } from '../components/ClassicContent'
 import { ClassicInfo } from '../components/ClassicInfo'
-import { emitter } from '@kit.BasicServicesKit';
 import { EmitEventType } from '../constants';
+import { StoreManager } from '../utils/store';
 
 @Component
 struct Classic {
-  @Prop tabContentShow: boolean = false;
   @State classicData: ClassicType | null = null;
   @State btnEnabled: boolean = true;
 
   async aboutToAppear() {
-    this.classicData = await getClassicLatest();
+    // 获取最新一期期刊缓存
+    this.classicData = StoreManager.getClassicLatest();
+
+    // 请求最新一期期刊数据
+    getClassicLatest()
+      .then((res: ClassicType) => {
+        this.classicData = res;
+
+        // 更新最新一期期刊缓存
+        StoreManager.setClassicLatest(res);
+      })
 
     // 订阅tab显示事件
-    emitter.on({ eventId: EmitEventType.TAB_PAGE_SHOW }, () => {
+    emitter.on({ eventId: EmitEventType.TAB_CLASSIC_SHOW }, () => {
       this.updateData();
     });
 
     // 订阅tab隐藏事件
-    /*emitter.on({ eventId: EmitEventType.TAB_PAGE_HIDE }, () => {
+    /*emitter.on({ eventId: EmitEventType.TAB_CLASSIC_HIDE }, () => {
       console.log('TabContent-hide');
     });*/
   }

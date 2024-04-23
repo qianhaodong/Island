@@ -1,6 +1,7 @@
 // 1、引入http
 import { http } from '@kit.NetworkKit'
 import { to } from '../utils';
+import { promptAction } from '@kit.ArkUI';
 
 export const BASE_URL = 'http://bl.talelin.com/v1';
 export const APP_KEY = 'AbhC31IG7ruCDp57';
@@ -28,7 +29,9 @@ export const request = async (url: string, method: http.RequestMethod = http.Req
 
   // TODO - 判断状态码
   if (result[0]) {
-    console.error(JSON.stringify(result[0]));
+    promptAction.showToast({
+      message: '请求异常，请稍后重试'
+    });
     throw new Error('[request]:httpRequest.request:Error');
   }
 
