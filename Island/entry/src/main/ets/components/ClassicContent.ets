@@ -46,6 +46,10 @@ struct ClassicContent {
                 .width(210)
                 .height(210)
                 .borderRadius(210)
+                .shadow({
+                  radius: 20,
+                  color: '#ccc',
+                })
 
               Image((this.playState.isPlay && this.playState.playIndex === this.classicData?.index) ? $r('app.media.pause_icon') : $r('app.media.play_icon'))
                 .width(60)

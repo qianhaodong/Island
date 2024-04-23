@@ -1,4 +1,3 @@
-import { Level } from '@ohos/hypium/src/main/Constant';
 import { BookItemType, DataModel } from '../models'
 import { router } from '@kit.ArkUI';
 
@@ -11,7 +10,6 @@ struct BookItem {
       Image(this.bookItem.image)
         .width('100%')
         .height('100%')
-        // .objectFit(ImageFit.Fill)
 
       Column() {
         Text(this.bookItem.title)
@@ -55,7 +53,12 @@ struct BookItem {
     .height(180)
     .margin({ bottom: 30 })
     .borderRadius(3)
-    /*.shadow({})*/
+    .shadow({
+      radius: 28,
+      offsetX: 2,
+      offsetY: 2,
+      color: '#eee',
+    })
     .onClick(() => {
       const params: DataModel = {
         id: this.bookItem.id
